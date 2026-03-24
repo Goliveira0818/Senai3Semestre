@@ -8,6 +8,8 @@ namespace Filmes.WebAPI.Models;
 
 public partial class Filme
 {
+    internal static string? Nome;
+
     [Key]
     [StringLength(40)]
     [Unicode(false)]

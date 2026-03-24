@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Filmes.WebAPI.DTO;
+using Filmes.WebAPI.Models;
 
-namespace Filmes.WebAPI.interfaces;
-
-public interface IFilmeRepository
+namespace Filmes.WebAPI.interfaces
 {
-    //void Cadastar(Filme novoFilme);
-    //void AtualizarIdCorpo(Filme FilmeAtualizado);
-
-    //void AtualizarUrl(Guild id, Filme filmeAtulizado);
-
-    //List<Filme> Listar();
-
-    //void Deletar(Guild id);
-
-    //Filme BuscarPorId(Guid id);
-
+    public interface IFilmeRepository
+    {
+        void Cadastrar(Filme novoFilme);
+        void AtualizarIdCorpo(Filme filmeAtualizado);
+        void AtualizarIdUrl(Guid id, Filme filmeAtualizado);
+        List<Filme> Listar();
+        void Deletar(Guid id);
+        Filme BuscarPorId(Guid id);
+        void AtualizarIdUrl(Guid id, FilmeDTO filmeAtualizado);
+    }
 }

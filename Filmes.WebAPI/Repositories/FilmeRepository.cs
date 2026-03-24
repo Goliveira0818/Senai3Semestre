@@ -1,37 +1,115 @@
-﻿using Filmes.WebAPI.interfaces;
+﻿using Filmes.WebAPI.BdContextFilme;
+using Filmes.WebAPI.interfaces;
+using Filmes.WebAPI.Models;
 
-namespace Filmes.WebAPI.Repositories
+public class FilmeRepository : IFilmeRepository
 {
-    public class FilmeRepository : IFilmeRepository
+
+    private readonly FilmeContext _context;
+
+    public FilmeRepository(FilmeContext context)
     {
-        //public void AtualizarIdCorpo(Filme FilmeAtualizado)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        _context = context;
+    }
+    public void AtualizarIdCorpo(Filme filmeAtualizado)
+    {
+        try
+        {
+            Filme filmeBuscado = _context.Filmes.Find(filmeAtualizado.IdFilme)!;
+            if (filmeBuscado != null)
+            {
+                filmeBuscado.Titulo = filmeAtualizado.Titulo;
+                filmeBuscado.IdGenero = filmeAtualizado.IdGenero;
+            }
+            _context.Filmes.Update(filmeBuscado!);
+            _context.SaveChanges();
+        }
+        catch (Exception)
+        {
 
-        //public void AtualizarUrl(Guild id, Filme filmeAtulizado)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            throw;
+        }
+    }
 
-        //public Filme BuscarPorId(Guid id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    public void AtualizarIdUrl(Guid id, Filme filmeAtualizado)
+    {
+        try
+        {
+            Filme filmeBuscado = _context.Filmes.Find(id.ToString())!;
+            if (filmeBuscado != null)
+            {
+                filmeBuscado.Titulo = filmeAtualizado.Titulo;
+                filmeBuscado.IdGenero = filmeAtualizado.IdGenero;
+            }
+            _context.Filmes.Update(filmeBuscado!);
+            _context.SaveChanges();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 
-        //public void Cadastar(Filme novoFilme)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    public Filme BuscarPorId(Guid id)
+    {
+        try
+        {
+            Filme filmeBuscado = _context.Filmes.Find
+                (id.ToString())!;
+            return filmeBuscado;
 
-        //public void Deletar(Guild id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        }
+        catch (Exception)
+        {
 
-        //public List<Filme> Listar()
-        //{
-        //    throw new NotImplementedException();
-        //}
+            throw;
+        }
+    }
+
+    public void Cadastrar(Filme novoFilme)
+    {
+        try
+        {
+            novoFilme.IdFilme = Guid.NewGuid().ToString();
+
+            _context.Filmes.Add(novoFilme);
+
+            _context.SaveChanges();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    public void Deletar(Guid id)
+    {
+        try
+        {
+            Filme filmeBuscado = _context.Filmes.Find(id.ToString())!;
+
+            if (filmeBuscado != null)
+            {
+                _context.Filmes.Remove(filmeBuscado);
+            }
+            _context.SaveChanges();
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    public List<Filme> Listar()
+    {
+        try
+        {
+            List<Filme> listaFilmes = _context.Filmes.ToList();
+            return listaFilmes;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }
