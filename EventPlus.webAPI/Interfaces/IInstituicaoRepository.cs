@@ -1,0 +1,13 @@
+﻿using EventPlus.webAPI.Models;
+
+namespace EventPlus.webAPI.Interfaces;
+
+public interface IInstituicaoRepository
+{
+    List<Instituicao> Usuario();
+    void Cadastrar(Instituicao instituicao);
+    void Atualizar(Guid id, Instituicao instituicao);
+    void Deletar(Guid id);
+    Instituicao BuscarPorId(Guid id);
+    object? Listar();
+}
